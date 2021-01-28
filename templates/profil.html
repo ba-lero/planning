@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block entete %}
+    <h2>Profil</h2>
+{% endblock %}
+
+{% block contenu %}
+    <p>{{ session['usernickname'] }}</p>
+{% endblock %}

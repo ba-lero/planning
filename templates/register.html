@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block entete %}
+<h2>Création de compte</h2>
+{% endblock %}
+
+{% block contenu %}
+<form method="post">
+    <div>
+        <label>Login</label>
+        <input type="text" name="login">
+    </div>
+    <div>
+        <label>Pseudo</label>
+        <input type="text" name="pseudo">
+    </div>
+    <div>
+        <label>Mot de passe</label>
+         <input type="password" name="mdp">
+    </div>
+    <div>
+        <label>Confirmer</label>
+         <input type="password" name="mdpcheck">
+    </div>
+    <div id="submit">
+        <input type="submit" value="envoyer">
+    </div>
+    <div class="textform">
+        {% if erreur_id %}
+        <p><span style="color:red">Identifiant déjà utilisé</span></p>
+        {% endif %}
+        {% if erreur_mdp %}
+        <p><span style="color:red">Le mot de passe doit être identique</span></p>
+        {% endif %}
+    </div>
+</form>
+
+{% endblock %}

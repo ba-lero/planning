@@ -1,0 +1,192 @@
+html {
+    font-family: sans-serif;
+    background: lightgrey; /* floralwhite */
+}
+
+body {
+    margin: 0 auto;
+}
+
+body h1 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+body h2 {
+    text-align: center;
+    margin: 0;
+}
+
+footer {
+    padding-top: 0;
+    position: relative;
+    background: linear-gradient(rgb(162, 163, 173), rgb(137, 137, 148));
+    height: 40px;
+    z-index: 9;
+}
+
+footer h1 {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+nav {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    align-items: baseline;
+    background: rgb(255, 238, 203);
+    -webkit-box-shadow: 0px 6px 5px -3px rgba(0,0,0,0.75); 
+    box-shadow: 0px 6px 5px -3px rgba(0,0,0,0.75);
+}
+
+nav h2 {
+    padding-left: 1rem;
+    margin: .5rem auto;
+    margin-left : 0;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+
+nav ul li {
+    margin-right: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+#corps {
+    position: relative;
+    z-index: 10;
+    max-width: 960px;
+    margin: 0 auto;
+    background: linear-gradient(white, rgb(223, 223, 235));
+    padding-bottom: 1rem;
+    -webkit-box-shadow: 0px 6px 5px -3px rgba(0,0,0,0.75); 
+    box-shadow: 0px 6px 5px -3px rgba(0,0,0,0.75);
+}
+
+#articles {
+    margin: 1rem;
+    margin-bottom: 0;
+    background: linear-gradient(rgb(232, 232, 240), rgb(209, 209, 224));
+    padding: 1rem;
+    -webkit-box-shadow: 0px 6px 5px -3px rgba(0,0,0,0.75); 
+    box-shadow: 0px 6px 5px -3px rgba(0,0,0,0.75);
+}
+
+#emploi {
+    background: white;
+    margin: 0 auto;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0;
+    padding-bottom: 1rem;
+    max-width: 700px;
+}
+
+#lignejours {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0;
+    padding-left: 2rem;
+}
+
+.textjours {
+    text-align: center;
+    width: 75px;
+}
+
+.ligne {
+    display: flex;
+    justify-content: space-between;
+}
+
+.casejours {
+    background: lightgrey;
+    border: 1px solid;
+    border-color: black;
+    width: 100px;
+    height: 20px;
+}
+
+.casejourselec {
+    background: yellowgreen;
+    border: 1px solid;
+    border-color: black;
+    width: 100px;
+    height: 20px;
+}
+
+.casejours:hover {
+    background: yellow;
+}
+
+.casejourselec:hover {
+    background: yellow;
+}
+
+h1, h2, h3, a {
+    color: rgb(73, 100, 187);
+}
+
+aside {
+    font-size: smaller;
+    color: rgb(122, 122, 122);
+    margin-left: 0.3rem;
+}
+
+article h1 {
+    margin-bottom: 0.5rem;
+}
+
+.contenu {
+    padding: 0.5rem 2rem;
+}
+
+hr {
+    width: 500px;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid lightgrey;
+}
+
+form {
+    margin: 1rem auto;
+    width: 500px;
+    padding: 1rem;
+    border: 1px solid #CCC;
+    border-radius: 1rem;
+}
+
+form label {
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.textform {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#submit {
+    text-align: center;
+}

@@ -1,0 +1,7 @@
+set FLASK_ENV=development
+set FLASK_APP=app
+flask run
+
+export FLASK_ENV=development
+export FLASK_APP=app
+flask run

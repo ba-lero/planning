@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'head.html' %}
+        <title>Emploi du temps</title>
+    </head>
+    <body>
+        <section id='corps'>
+        <h1><a href='{{ url_for("accueil") }}'>Emploi du temps</a></h1>
+        <nav>
+            {% include 'nav.html' %}
+        </nav>
+            <section id='articles'>
+            <header>
+                {% block entete %}{% endblock %}
+            </header>
+            {% block contenu %}{% endblock %}
+            </section>
+        </section>
+        <footer>
+            {% include 'footer.html' %}
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block entete %}
+    {% if session['username'] %}
+        <h2>Vos derniers emplois du temps</h2>
+    {% else %}
+        <h2>Créez un compte !</h2>
+    {% endif %}
+{% endblock %}
+
+{% block contenu %}
+    {% if session['username'] %}
+        <p>vous avez créé un compte c'est bj</p>
+    {% else %}
+        <p>vous avez pas créé de compte c'est pas bj</p>
+    {% endif %}
+{% endblock %}
+
