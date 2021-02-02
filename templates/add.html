@@ -17,30 +17,48 @@
             {% for y in range(7) %}
                 {% if not(infos[0].est_vide()) %}
                     {% if i == infos[0].debut.heure and infos[0].debut.jour == infos[1][y].journ %}
-                        <a class="casejourselec" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                        <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
                     {% elif infos[0].fin %}
                         {% if infos[0].debut.jour == infos[0].fin.jour %}
-                            {% if infos[0].debut.heure <= i <= infos[0].fin.heure and infos[0].debut.jour <= infos[1][y].journ <= infos[0].fin.jour %}
-                                <a class="casejourselec" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                            {% if infos[0].debut.heure <= i < infos[0].fin.heure and infos[0].debut.jour <= infos[1][y].journ <= infos[0].fin.jour %}
+                                <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
                             {% else %}
-                                <a class="casejours" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                                <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
                             {% endif %}
                         {% else %}
-                            {% if (infos[0].debut.heure <= i and infos[0].debut.jour == infos[1][y].journ) or (infos[0].fin.heure >= i and infos[0].fin.jour == infos[1][y].journ) or (infos[0].fin.jour-infos[0].debut.jour > 1 and infos[0].debut.jour < infos[1][y].journ < infos[0].fin.jour) %}
-                            <a class="casejourselec" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                            {% if (infos[0].debut.heure <= i and infos[0].debut.jour == infos[1][y].journ) or (infos[0].fin.heure > i and infos[0].fin.jour == infos[1][y].journ) or (infos[0].fin.jour-infos[0].debut.jour > 1 and infos[0].debut.jour < infos[1][y].journ < infos[0].fin.jour) %}
+                            <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
                             {% else %}
-                                <a class="casejours" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                                <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
                             {% endif %}
                         {% endif %}
                     {% else %}
-                        <a class="casejours" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                        <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
                     {% endif %}
                 {% else %}
-                    <a class="casejours" href='{{ url_for("select", borne=(i,y)) }}'></a>
+                    <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
                 {% endif %}
             {% endfor %}
         </div>
         {% endfor %}
+        {% if not(infos[0].est_vide()) %}
+            <a href='{{ url_for("select", retour="reset") }}'>Reset</a>
+        {% endif %}
+        {% if infos[0].est_pret() %}
+            <form method="post">
+                <div>
+                    <label>Mot de passe</label>
+                    <select name='lieu' size=1>
+                    {% for lieu in infos[2] %}
+                        <option value='{{ lieu[1] }}'>{{ lieu[1] }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div id="submit">
+                    <input type="submit" value="envoyer">
+                </div>
+            </form>
+        {% endif %}
     </section>
 
 {% endblock %}

@@ -34,6 +34,7 @@ CREATE TABLE membre_de_groupe (
 
 CREATE TABLE lieu (
   id_l      INTEGER     PRIMARY KEY AUTOINCREMENT,
+  auteur_id INTEGER     NOT NULL REFERENCES membres (id_m),
   nom       VARCHAR(50) NOT NULL,
   adresse   VARCHAR(100)   
 );
@@ -52,7 +53,7 @@ INSERT INTO membres (login, mdp, pseudo) VALUES ('alice', 'pbkdf2:sha256:150000$
 INSERT INTO emploi (auteur_id, nom) VALUES (1, 'Sport'), (2, 'Resto');
 INSERT INTO groupe (auteur_id, nom) VALUES (1, 'Les Bros'), (2, 'Famille');
 INSERT INTO membre_de_groupe (membre_id, groupe_id) VALUES (1, 1), (2, 1), (2, 2);
-INSERT INTO lieu (nom, adresse) VALUES ('Maison', '2 rue des Pines'), ('Terrain', '4 allée du grand Philippe');
+INSERT INTO lieu (auteur_id, nom, adresse) VALUES (1, 'Maison', '2 rue des Pines'), (2, 'Terrain', '4 allée du grand Philippe');
 INSERT INTO horaire (emploi_id, debut, fin, groupe_id, lieu_id) VALUES 
                     (1, '2021-01-26 10:10:10', '2021-01-26 10:20:20', 1, 2),
                     (2, '2021-01-29 12:45:00', '2021-01-29 13:45:00', 2, 1);

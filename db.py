@@ -24,3 +24,10 @@ def creer_compte(login, mdp, pseudo):
     with db.connect("emploi.db") as c:
         c.execute("""INSERT INTO membres (login, mdp, pseudo) VALUES (?, ?, ?);""", (login, generate_password_hash(mdp), pseudo))
 
+def recuperer_lieux(id):
+    with db.connect("emploi.db") as c:
+        curs = c.execute("""SELECT id_l, nom, adresse FROM lieu WHERE auteur_id = ?""", (id,))
+        return curs.fetchall()
+
+def inserer_horaire(horaire, lieux):
+    print(horaire, lieux)
