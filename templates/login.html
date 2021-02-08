@@ -5,22 +5,22 @@
 {% endblock %}
 
 {% block contenu %}
-<form method="post">
-    <div>
-        <label>Login</label>
-        <input type="text" name="login">
-    </div>
-    <div>
-        <label>Mot de passe</label>
-        <input type="password" name="mdp">
-    </div>
-    <div id="submit">
-        <input type="submit" value="envoyer">
-    </div>
-    <div class="textform">
-        {% if erreur %}
-        <p><span style="color:red">Identifiant ou Mot de passe incorrect</span></p>
-        {% endif %}
-    </div>
-</form>
+    <form method="post">
+        <div>
+            <label>Login</label>
+            <input type="text" name="login">
+        </div>
+        <div>
+            <label>Mot de passe</label>
+            <input type="password" name="mdp">
+        </div>
+        <div id="submit">
+            <input type="submit" value="envoyer">
+        </div>
+        <div class="textform">
+            {% if erreur %}
+            <p><span style="color:red">Identifiant ou Mot de passe incorrect</span></p>
+            {% endif %}
+        </div>
+    </form>
 {% endblock %}
