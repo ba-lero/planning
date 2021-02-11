@@ -46,11 +46,12 @@ def recuperer_lieux(id):
 
 def inserer_horaire(horaire, lieu, id):
     with db.connect("emploi.db") as c:
-        debut = f"{horaire.debut.year}-{horaire.debut.month}-{horaire.debut.day} {horaire.debut.hour}:00:00"
-        fin = f"{horaire.fin.year}-{horaire.fin.month}-{horaire.fin.day} {horaire.fin.hour}:00:00"
+        debut = f"""{format_horaire(horaire.debut.year)}-{format_horaire(horaire.debut.month)}-{format_horaire(horaire.debut.day)} {format_horaire(horaire.debut.hour)}:{format_horaire(horaire.debut.minute)}:{format_horaire(horaire.debut.second)}"""
+        fin = f"""{format_horaire(horaire.fin.year)}-{format_horaire(horaire.fin.month)}-{format_horaire(horaire.fin.day)} {format_horaire(horaire.fin.hour)}:{format_horaire(horaire.fin.minute)}:{format_horaire(horaire.fin.second)}"""
         c.execute("""INSERT INTO horaire (emploi_id, lieu_id, debut, fin) VALUES (?, ?, ?, ?)""", (id, lieu, debut, fin))
-    
-    with db.connect("emploi.db") as c:
-        curs = c.execute("""SELECT * FROM horaire WHERE emploi_id = 1""")
-        for i in curs:
-            print(i)
+
+def format_horaire(nb):
+    result = str(nb)
+    if len(result) == 1:
+        result = "0" + result
+    return result
