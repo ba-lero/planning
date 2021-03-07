@@ -81,6 +81,18 @@ def recuperer_membre_de_groupe(id_g):
                         WHERE membre_de_groupe.groupe_id = ?""", (id_g,))
         return [m[0] for m in curs]
 
+def recuperer_horaire_de_groupe(id_m):
+    with db.connect("emploi.db") as c:
+        curs = c.execute("""SELECT horaire.description, horaire.debut, horaire.fin FROM horaire 
+                        JOIN membre_de_groupe ON horaire.groupe_id = membre_de_groupe.groupe_id
+                        WHERE membre_de_groupe.membre_id = ?""", (id_m,))
+        return curs.fetchall()
+
+"""SELECT horaire.description, horaire.debut, horaire.fin, lieu.nom 
+                        FROM horaire JOIN lieu ON lieu.id_l = horaire.lieu_id
+                        JOIN membre_de_groupe ON membre_de_groupe.groupe_id = horaire.groupe_id
+                        WHERE membre_de_groupe.membre_id = ?"""
+
 def format_horaire(nb):
     result = str(nb)
     if len(result) == 1:

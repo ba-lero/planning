@@ -5,10 +5,15 @@
 {% endblock %}
 
 {% block contenu %}
-    {% if emplois != None %}
-        {% for emploi in emplois %}
-            <p>{{ emploi[0] }}</p><p>{{ emploi[1] }}</p>
+    {% if infos != None %}
+        <p>Emplois :</p>
+        {% for emploi in infos[0] %}
+            <p>{{ emploi[0] }}</p>
             <a href='{{ url_for("setemploi", id_emploi=emploi[0][2]) }}'>Modifier</a>
+        {% endfor %}
+        <p>Mes prochains RDV :</p>
+        {% for info in infos[1] %}
+            <p>{{ info }}</p>
         {% endfor %}
     {% endif %}
 {% endblock %}

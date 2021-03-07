@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
-from db import recuperer_compte, creer_compte, creer_emploi, creer_lieu, creer_groupe, recuperer_lieux, recuperer_emplois, recuperer_groupes, inserer_horaire, inserer_personne_groupe, recuperer_membre_de_groupe
+from db import recuperer_compte, creer_compte, creer_emploi, creer_lieu, creer_groupe, recuperer_lieux, recuperer_emplois, recuperer_groupes, inserer_horaire, inserer_personne_groupe, recuperer_membre_de_groupe, recuperer_horaire_de_groupe
 import datetime
 from date import current_week, str_to_list, Horaire
 from werkzeug.security import check_password_hash
@@ -84,7 +84,8 @@ def profil():
     emplois = recuperer_emplois(session['userid'])
     cday = datetime.date.today()
     semaine = current_week(cday)
-    return render_template('profil.html', emplois = emplois)
+    horaires = recuperer_horaire_de_groupe(session['userid'])
+    return render_template('profil.html', infos = (emplois, horaires))
 
 @app.route('/groupes')
 def groupes():
@@ -112,7 +113,7 @@ def ajouter_lieu():
 def ajouter_groupe():
     if request.method == "POST":
         creer_groupe(session['userid'], request.form['nom'])
-        return redirect(url_for('profil'))
+        return redirect(url_for('groupes'))
     else:
         return render_template('ajouter_groupe.html')
 
