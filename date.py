@@ -3,13 +3,12 @@ import datetime
 
 jours = ('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche')
 
-def current_week():
-    today = datetime.date.today()
+def current_week(cday):
     calendar = Calendar()
-    months = calendar.monthdatescalendar(today.year, today.month)
+    months = calendar.monthdatescalendar(cday.year, cday.month)
     for week in months:
         for day in week:
-            if day == today:
+            if day == cday:
                 curr_week = week
     result = []
     for i in range(len(curr_week)):

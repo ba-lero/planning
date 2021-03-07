@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block entete %}
+    <h2>Nouveau lieu</h2>
+{% endblock %}
+
+{% block contenu %}
+    <form method="post">
+        <div>
+            <label>Nom</label>
+            <input type="text" name="nom">
+        </div>
+        <div>
+            <label>Adresse</label>
+            <input type="text" name="adresse">
+        </div>
+        <div id="submit">
+            <input type="submit" value="envoyer">
+        </div>
+    </form>
+{% endblock %}

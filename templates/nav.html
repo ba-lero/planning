@@ -1,8 +1,21 @@
 {% if 'userid' in session %}
-<h2><a href='{{ url_for("profil") }}'>{{ session['usernickname'] }}</a></h2>
+<ul>
+    <li><h2><a href='{{ url_for("profil") }}'>{{ session['usernickname'] }}</a></h2>
+        <ul class='sous'>
+            <li><a href='{{ url_for("profil") }}'>Profil</a></li>
+            <li><a href='{{ url_for("groupes") }}'>Groupes</a></li>
+        </ul>
+    </li>
+</ul>
 <ul>
     <li><a href='{{ url_for("logout") }}'>Se déconnecter</a></li>
-    <li><a href='{{ url_for("ajouter") }}'>Nouvel emploi du temps</a></li>
+    <li><a>Nouveau</a>
+        <ul class='sous'>
+            <li><a href='{{ url_for("ajouter_emploi") }}'>Emploi</a></li>
+            <li><a href='{{ url_for("ajouter_lieu") }}'>Lieu</a></li>
+            <li><a href='{{ url_for("ajouter_groupe") }}'>Groupes</a></li>
+        </ul>
+    </li>
 </ul>
 {% else %}
 <h2>Non connecté</h2>

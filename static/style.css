@@ -45,14 +45,16 @@ nav {
 }
 
 nav h2 {
-    padding-left: 1rem;
-    margin: .5rem auto;
-    margin-left : 0;
+    padding-left: 0;
+    margin: 11px;
+    margin-left : 1rem;
 }
 
 nav ul {
     display: flex;
     list-style-type: none;
+    padding-left : 0;
+    margin : 0;
 }
 
 nav ul li {
@@ -138,6 +140,20 @@ a:hover {
 
 .casejourselec:hover {
     background: yellow;
+}
+
+.sous {
+    display: none;
+}
+
+.sous li {
+    width: 0;
+}
+
+nav > ul li:hover .sous {
+    display: block;
+    background-color: white;
+    text-align: left;
 }
 
 h1, h2, h3, a {
