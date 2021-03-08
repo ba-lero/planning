@@ -64,11 +64,11 @@ def recuperer_lieux(id):
         curs = c.execute("""SELECT id_l, nom, adresse FROM lieu WHERE auteur_id = ?""", (id,))
         return curs.fetchall()
 
-def inserer_horaire(horaire, lieu, id_h, id_g, desc):
+def inserer_horaire(horaire, lieu, id_e, id_g, desc):
     with db.connect("emploi.db") as c:
         debut = f"""{format_horaire(horaire.debut.year)}-{format_horaire(horaire.debut.month)}-{format_horaire(horaire.debut.day)} {format_horaire(horaire.debut.hour)}:{format_horaire(horaire.debut.minute)}:{format_horaire(horaire.debut.second)}"""
         fin = f"""{format_horaire(horaire.fin.year)}-{format_horaire(horaire.fin.month)}-{format_horaire(horaire.fin.day)} {format_horaire(horaire.fin.hour)}:{format_horaire(horaire.fin.minute)}:{format_horaire(horaire.fin.second)}"""
-        c.execute("""INSERT INTO horaire (emploi_id, groupe_id, lieu_id, debut, fin, description) VALUES (?, ?, ?, ?, ?)""", (id_h, id_g, lieu, debut, fin, desc))
+        c.execute("""INSERT INTO horaire (emploi_id, groupe_id, lieu_id, debut, fin, description) VALUES (?, ?, ?, ?, ?, ?)""", (id_e, id_g, lieu, debut, fin, desc))
 
 def inserer_personne_groupe(login, id_g):
     with db.connect("emploi.db") as c:
@@ -87,11 +87,6 @@ def recuperer_horaire_de_groupe(id_m):
                         JOIN membre_de_groupe ON horaire.groupe_id = membre_de_groupe.groupe_id
                         WHERE membre_de_groupe.membre_id = ?""", (id_m,))
         return curs.fetchall()
-
-"""SELECT horaire.description, horaire.debut, horaire.fin, lieu.nom 
-                        FROM horaire JOIN lieu ON lieu.id_l = horaire.lieu_id
-                        JOIN membre_de_groupe ON membre_de_groupe.groupe_id = horaire.groupe_id
-                        WHERE membre_de_groupe.membre_id = ?"""
 
 def format_horaire(nb):
     result = str(nb)

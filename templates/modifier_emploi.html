@@ -24,7 +24,7 @@
                             {% endif %}
                         {% else %}
                             {% if infos[0].debut.date() <= infos[1][y].jour <= infos[0].fin.date() %}
-                                {% if (infos[0].debut.day == infos[1][y].jour.day and i >= infos[0].debut.hour) or (infos[0].fin.day == infos[1][y].jour.day and i <= infos[0].fin.hour) or (infos[0].debut.date() < infos[1][y].jour < infos[0].fin.date()) %}
+                                {% if (infos[0].debut.day == infos[1][y].jour.day and i >= infos[0].debut.hour) or (infos[0].fin.day == infos[1][y].jour.day and i < infos[0].fin.hour) or (infos[0].debut.date() < infos[1][y].jour < infos[0].fin.date()) %}
                                     <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
                                 {% else %}
                                     <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>

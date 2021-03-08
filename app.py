@@ -124,7 +124,7 @@ def modifier_emploi():
     if request.method == "POST":
         inserer_horaire(horaire, request.form["lieu"], session['emploicourant'][0][2], request.form["groupe"], request.form["desc"])
         horaire.reset()
-        return redirect(url_for('modifier'))
+        return redirect(url_for('modifier_emploi'))
     if 'action' in request.args:
         retour = request.args["action"]
         if retour == 'reset':
