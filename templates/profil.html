@@ -6,14 +6,13 @@
 
 {% block contenu %}
     {% if infos != None %}
-        <p>Emplois :</p>
+        <p style='font-size: 125%;'>Emplois :</p>
         {% for emploi in infos[0] %}
-            <p>{{ emploi[0] }}</p>
-            <a href='{{ url_for("setemploi", id_emploi=emploi[0][2]) }}'>Modifier</a>
+            <p>{{ emploi[0][0] }} <a href='{{ url_for("setemploi", id_emploi=emploi[0][2]) }}'>Modifier</a></p>
         {% endfor %}
-        <p>Mes prochains RDV :</p>
+        <p style='font-size: 125%;'>Mes prochains RDV :</p>
         {% for info in infos[1] %}
-            <p>{{ info }}</p>
+            <p>-{{ info[0] }} De {{ info[1] }} à {{ info[2] }} avec {{ info[5] }} <br> <span style='color : rgb(75, 75, 75); font-size: 75%;'>"{{ info[3] }}" : {{ info[4] }}</span></p>
         {% endfor %}
     {% endif %}
 {% endblock %}

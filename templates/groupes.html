@@ -6,7 +6,16 @@
 
 {% block contenu %}
     {% for groupe in groupes %}
-        <p>{{ groupe }}</p>
-        <a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Modifier</a>
+        <p style='font-size: 125%;'>Nom : {{ groupe[0][0] }}</p>
+        <p>Appartenants : 
+            {% for personne in groupe[1] %}
+                {{ personne }},
+            {% endfor %}
+        </p>
+        {% if groupe != groupes[-1] %}
+            <div style='margin-bottom: 2rem;'><a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Ajouter</a></div>
+        {% else %}
+            <a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Ajouter</a>
+        {% endif %}
     {% endfor %}
 {% endblock %}

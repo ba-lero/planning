@@ -25,26 +25,24 @@ def accueil():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    erreur = False
     if request.method == "POST":
         login = request.form["login"]
         mdp = request.form["mdp"]
         check = recuperer_compte(login)
         if check is None:
             session.clear()
-            return redirect(url_for('login', erreur=True))
-        elif mdp is None:
-            session.clear()
-            return redirect(url_for('login', erreur=True))
-        if check_password_hash(check[1],mdp):
+            erreur = True
+        elif check_password_hash(check[1],mdp):
             session.clear()
             session['userid'] = check[0]
             session["username"] = login
             session["usernickname"] = check[2]
             return redirect(url_for('accueil'))
-    if 'erreur' in request.args:
-        return render_template('login.html',erreur=request.args['erreur'])
-    else:
-        return render_template('login.html',erreur=False)
+        else: 
+            session.clear()
+            erreur = True
+    return render_template('login.html',erreur=erreur)
 
 @app.route('/logout')
 def logout():
@@ -143,7 +141,7 @@ def modifier_emploi():
         horaire.reset()
     session["groupes"] = recuperer_groupes(session['userid'])
     session["lieux"] = recuperer_lieux(session['userid'])
-    return render_template('modifier_emploi.html', infos=(horaire, semaine))
+    return render_template('modifier_emploi.html', infos=(horaire, semaine, datetime.date.today()))
 
 @app.route('/modifier_groupe', methods=["GET", "POST"])
 def modifier_groupe():

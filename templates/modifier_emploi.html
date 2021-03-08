@@ -8,7 +8,11 @@
     <section id="emploi">
         <div id="lignejours">
             {% for jour in infos[1] %}
-                <p class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
+                {% if jour.jour == infos[2] %}
+                    <p style='font-weight: bold;' class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
+                {% else %}
+                    <p class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
+                {% endif %}
             {% endfor %}
         </div>
         {% for i in range(24) %}
