@@ -9,13 +9,17 @@
         <p style='font-size: 125%;'>Nom : {{ groupe[0][0] }}</p>
         <p>Appartenants : 
             {% for personne in groupe[1] %}
-                {{ personne }},
+                {% if personne[1] == session['userid'] %}
+                    {{ personne[0] }},
+                {% else %}
+                    <a href='{{ url_for("supprimer_mb_g", ids=(personne[1], groupe[0][1])) }}'>{{ personne[0] }},</a>
+                {% endif %}
             {% endfor %}
         </p>
         {% if groupe != groupes[-1] %}
-            <div style='margin-bottom: 2rem;'><a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Ajouter</a></div>
+            <div style='margin-bottom: 2rem;'><a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Ajouter</a> <a href='{{ url_for("supprimer_groupe", id_groupe=groupe[0][1]) }}'>Supprimer</a></div>
         {% else %}
-            <a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Ajouter</a>
+            <a href='{{ url_for("setgroupe", id_groupe=groupe[0][1]) }}'>Ajouter</a> <a href='{{ url_for("supprimer_groupe", id_groupe=groupe[0][1]) }}'>Supprimer</a>
         {% endif %}
     {% endfor %}
 {% endblock %}

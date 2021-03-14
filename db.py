@@ -32,10 +32,34 @@ def creer_lieu(id, nom, adresse):
     with db.connect("emploi.db") as c:
         c.execute("""INSERT INTO lieu (auteur_id, nom, adresse) VALUES (?, ?, ?)""", (id, nom, adresse))
 
+def modifier_adresse(id, nouvad):
+    with db.connect("emploi.db") as c:
+        c.execute("""UPDATE lieu SET adresse = ? WHERE id_l = ?""", (nouvad, id,))
+
 def creer_groupe(id, nom):
     with db.connect("emploi.db") as c:
         c.execute("""INSERT INTO groupe (auteur_id, nom) VALUES (?, ?)""", (id, nom))
         c.execute("""INSERT INTO membre_de_groupe (membre_id, groupe_id) VALUES (?, (SELECT MAX(id_g) FROM groupe))""", (id,))
+
+def suppr_emploi(id_e):
+    with db.connect("emploi.db") as c:
+        c.execute("""DELETE FROM horaire WHERE emploi_id = ?""", (id_e,))
+        c.execute("""DELETE FROM emploi WHERE id_e = ?""", (id_e,))
+
+def suppr_lieu(id_l):
+    with db.connect("emploi.db") as c:
+        c.execute("""DELETE FROM horaire WHERE lieu_id = ?""", (id_l,))
+        c.execute("""DELETE FROM lieu WHERE id_l = ?""", (id_l,))
+
+def suppr_groupe(id_g):
+    with db.connect("emploi.db") as c:
+        c.execute("""DELETE FROM membre_de_groupe WHERE groupe_id = ?""", (id_g,))
+        c.execute("""DELETE FROM horaire WHERE groupe_id = ?""", (id_g,))
+        c.execute("""DELETE FROM groupe WHERE id_g = ?""", (id_g,))
+
+def suppr_mb_de_groupe(id_m, id_g):
+    with db.connect("emploi.db") as c:
+        c.execute("""DELETE FROM membre_de_groupe WHERE membre_id = ? and groupe_id = ?""", (id_m, id_g))
 
 def recuperer_emplois(id):
     with db.connect("emploi.db") as c:
@@ -50,18 +74,18 @@ def recuperer_emplois(id):
 
 def recuperer_groupes(id):
     with db.connect("emploi.db") as c:
-        curs = c.execute("""SELECT nom, id_g FROM groupe WHERE auteur_id = ?""", (id,))
+        curs = c.execute("""SELECT nom, id_g FROM groupe WHERE auteur_id = ? ORDER BY nom ASC""", (id,))
         groupes = []
         for g in curs:
-            curs2 = c.execute("""SELECT membres.pseudo FROM membres 
+            curs2 = c.execute("""SELECT membres.pseudo, membres.id_m FROM membres 
                 JOIN membre_de_groupe ON membres.id_m = membre_de_groupe.membre_id
                 WHERE membre_de_groupe.groupe_id = ?""", (g[1],))
-            groupes.append((g, [m[0] for m in curs2]))
+            groupes.append((g, [m for m in curs2]))
         return groupes
 
 def recuperer_lieux(id):
     with db.connect("emploi.db") as c:
-        curs = c.execute("""SELECT id_l, nom, adresse FROM lieu WHERE auteur_id = ?""", (id,))
+        curs = c.execute("""SELECT id_l, nom, adresse FROM lieu WHERE auteur_id = ? ORDER BY nom ASC""", (id,))
         return curs.fetchall()
 
 def inserer_horaire(horaire, lieu, id_e, id_g, desc):
@@ -87,7 +111,8 @@ def recuperer_horaire_de_groupe(id_m):
                         JOIN lieu ON lieu.id_l = horaire.lieu_id
                         JOIN membre_de_groupe ON horaire.groupe_id = membre_de_groupe.groupe_id
                         JOIN groupe ON groupe.id_g = horaire.groupe_id
-                        WHERE membre_de_groupe.membre_id = ? and horaire.debut > CURRENT_TIMESTAMP""", (id_m,))
+                        WHERE membre_de_groupe.membre_id = ? and horaire.debut > CURRENT_TIMESTAMP
+                        ORDER BY horaire.debut""", (id_m,))
         return curs.fetchall()
 
 def format_horaire(nb):

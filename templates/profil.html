@@ -8,7 +8,7 @@
     {% if infos != None %}
         <p style='font-size: 125%;'>Emplois :</p>
         {% for emploi in infos[0] %}
-            <p>{{ emploi[0][0] }} <a href='{{ url_for("setemploi", id_emploi=emploi[0][2]) }}'>Modifier</a></p>
+            <p>{{ emploi[0][0] }} <a href='{{ url_for("setemploi", id_emploi=emploi[0][2]) }}'>Modifier</a> <a href='{{ url_for("supprimer_emploi", id_emploi=emploi[0][2]) }}'>Supprimer</a></p>
         {% endfor %}
         <p style='font-size: 125%;'>Mes prochains RDV :</p>
         {% for info in infos[1] %}

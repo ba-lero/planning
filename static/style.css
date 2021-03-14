@@ -1,6 +1,6 @@
 html {
     font-family: sans-serif;
-    background: lightgrey; /* floralwhite */
+    background: lightgrey; 
 }
 
 body {
@@ -45,8 +45,9 @@ nav {
 }
 
 nav h2 {
+    text-align: left;
     padding-left: 0;
-    margin: 11px;
+    margin-top: 11px;
     margin-left : 1rem;
 }
 
@@ -144,16 +145,25 @@ a:hover {
 
 .sous {
     display: none;
-}
-
-.sous li {
-    width: 0;
+    background: rgb(255, 245, 224);
+    text-align: center;
+    margin: 0;
 }
 
 nav > ul li:hover .sous {
     display: block;
-    background-color: white;
-    text-align: left;
+}
+
+nav ul li ul li {
+    border: 1px solid;
+    border-color: rgb(231, 221, 197);
+    margin: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+nav ul li ul li a {
+    font-size: 80%;
 }
 
 h1, h2, h3, a {

@@ -5,77 +5,89 @@
 {% endblock %}
 
 {% block contenu %}
-    <section id="emploi">
-        <div id="lignejours">
-            {% for jour in infos[1] %}
-                {% if jour.jour == infos[2] %}
-                    <p style='font-weight: bold;' class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
-                {% else %}
-                    <p class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% for i in range(24) %}
-            <div class="ligne">
-                <p style='margin:0; width:2rem; text-align:center;'>{{ i }}h</p>
-                {% for y in range(7) %}
-                    {% if not(infos[0].est_vide()) %}
-                        {% if infos[0].debut.day == infos[0].fin.day and infos[0].debut.month == infos[0].fin.month and infos[0].debut.year == infos[0].fin.year %}
-                            {% if infos[0].debut.hour <= i < infos[0].fin.hour and infos[0].debut.day <= infos[1][y].jour.day <= infos[0].fin.day and infos[1][y].jour.month == infos[0].debut.month and infos[1][y].jour.year == infos[0].debut.year %}
-                                <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
-                            {% else %}
-                                <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
-                            {% endif %}
-                        {% else %}
-                            {% if infos[0].debut.date() <= infos[1][y].jour <= infos[0].fin.date() %}
-                                {% if (infos[0].debut.day == infos[1][y].jour.day and i >= infos[0].debut.hour) or (infos[0].fin.day == infos[1][y].jour.day and i < infos[0].fin.hour) or (infos[0].debut.date() < infos[1][y].jour < infos[0].fin.date()) %}
+    {% if session["groupes"] and session["lieux"] %}
+        <section id="emploi">
+            <div id="lignejours">
+                {% for jour in infos[1] %}
+                    {% if jour.jour == infos[2] %}
+                        <p style='font-weight: bold;' class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
+                    {% else %}
+                        <p class="textjours">{{ jour.jourl }}<br>{{ jour.jour.day }}/{{ jour.jour.month }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% for i in range(24) %}
+                <div class="ligne">
+                    <p style='margin:0; width:2rem; text-align:center;'>{{ i }}h</p>
+                    {% for y in range(7) %}
+                        {% if not(infos[0].est_vide()) %}
+                            {% if infos[0].debut.day == infos[0].fin.day and infos[0].debut.month == infos[0].fin.month and infos[0].debut.year == infos[0].fin.year %}
+                                {% if infos[0].debut.hour <= i < infos[0].fin.hour and infos[0].debut.day <= infos[1][y].jour.day <= infos[0].fin.day and infos[1][y].jour.month == infos[0].debut.month and infos[1][y].jour.year == infos[0].debut.year %}
                                     <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
                                 {% else %}
                                     <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
                                 {% endif %}
                             {% else %}
-                                <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
+                                {% if infos[0].debut.date() <= infos[1][y].jour <= infos[0].fin.date() %}
+                                    {% if (infos[0].debut.day == infos[1][y].jour.day and i >= infos[0].debut.hour) or (infos[0].fin.day == infos[1][y].jour.day and i < infos[0].fin.hour) or (infos[0].debut.date() < infos[1][y].jour < infos[0].fin.date()) %}
+                                        <a class="casejourselec" href='{{ url_for("select", retour=(i,y)) }}'></a>
+                                    {% else %}
+                                        <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
+                                    {% endif %}
+                                {% else %}
+                                    <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
+                                {% endif %}
                             {% endif %}
+                        {% else %}
+                            <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
                         {% endif %}
-                    {% else %}
-                        <a class="casejours" href='{{ url_for("select", retour=(i,y)) }}'></a>
-                    {% endif %}
-                {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div style='display:flex; justify-content: space-between;'>
+                {% if not(infos[0].est_vide()) %}
+                    <a href='{{ url_for("select", retour="previous") }}'>Semaine précédente</a><a href='{{ url_for("select", retour="reset") }}'>Reset</a><a href='{{ url_for("select", retour="next") }}'>Semaine suivante</a>
+                {% else %}
+                    <a href='{{ url_for("select", retour="previous") }}'>Semaine précédente</a><a href='{{ url_for("select", retour="next") }}'>Semaine suivante</a>
+                {% endif %}
             </div>
-        {% endfor %}
-        <div style='display:flex; justify-content: space-between;'>
-            {% if not(infos[0].est_vide()) %}
-                <a href='{{ url_for("select", retour="previous") }}'>Semaine précédente</a><a href='{{ url_for("select", retour="reset") }}'>Reset</a><a href='{{ url_for("select", retour="next") }}'>Semaine suivante</a>
-            {% else %}
-                <a href='{{ url_for("select", retour="previous") }}'>Semaine précédente</a><a href='{{ url_for("select", retour="next") }}'>Semaine suivante</a>
+            {% if infos[0].est_pret() %}
+                <form method="post">
+                    <div>
+                        <label>Lieu</label>
+                        <select name='lieu' size=1>
+                        {% for lieu in session['lieux'] %}
+                            <option value='{{ lieu[0] }}'>{{ lieu[1] }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Groupe</label>
+                        <select name='groupe' size=1>
+                        {% for groupe in session['groupes'] %}
+                            <option value='{{ groupe[0][1] }}'>{{ groupe[0][0] }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Description</label>
+                        <input type="text" name="desc">
+                    </div>
+                    <div id="submit">
+                        <input type="submit" value="envoyer">
+                    </div>
+                </form>
+            {% endif %}
+        </section>
+        {% else %}
+        <div style='text-align: center;'>
+            <p>Vous devez d'abord créer :</p>
+            {% if not(session['groupes']) %}
+                <a href='{{ url_for("ajouter_groupe") }}'>Groupe</a>
+            {% endif %}
+            {% if not(session['lieux']) %}
+                <a href='{{ url_for("ajouter_lieu") }}'>Lieu</a>
             {% endif %}
         </div>
-        {% if infos[0].est_pret() %}
-            <form method="post">
-                <div>
-                    <label>Lieu</label>
-                    <select name='lieu' size=1>
-                    {% for lieu in session['lieux'] %}
-                        <option value='{{ lieu[0] }}'>{{ lieu[1] }}</option>
-                    {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label>Groupe</label>
-                    <select name='groupe' size=1>
-                    {% for groupe in session['groupes'] %}
-                        <option value='{{ groupe[0][1] }}'>{{ groupe[0][0] }}</option>
-                    {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label>Description</label>
-                    <input type="text" name="desc">
-                </div>
-                <div id="submit">
-                    <input type="submit" value="envoyer">
-                </div>
-            </form>
         {% endif %}
-    </section>
 {% endblock %}

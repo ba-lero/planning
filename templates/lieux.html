@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block entete %}
+    <h2>Lieux</h2>
+{% endblock %}
+
+{% block contenu %}
+    {% for lieu in lieux %}
+        <p style='font-size: 125%;'>Nom : {{ lieu[1] }}</p>
+        <p>Adresse : {{ lieu[2] }}</p>
+        {% if lieu != lieux[-1] %}
+            <div style='margin-bottom: 2rem;'><a href='{{ url_for("setlieu", id_lieu=lieu[0]) }}'>Modifier adresse</a> <a href='{{ url_for("supprimer_lieu", id_lieu=lieu[0]) }}'>Supprimer</a></div>
+        {% else %}
+            <a href='{{ url_for("setlieu", id_lieu=lieu[0]) }}'>Modifier adresse</a> <a href='{{ url_for("supprimer_lieu", id_lieu=lieu[0]) }}'>Supprimer</a>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -2,17 +2,27 @@
 
 {% block entete %}
     {% if session['username'] %}
-        <h2>Vos derniers emplois du temps</h2>
+        <h2>Bienvenue !</h2>
     {% else %}
         <h2>Créez un compte !</h2>
     {% endif %}
 {% endblock %}
 
 {% block contenu %}
+    <p style='font-size: large;'>
     {% if session['username'] %}
-        <p>vous avez créé un compte c'est bj</p>
+        Vous pouvez maintenant créer des : <br>
+        _<a href='{{ url_for("ajouter_emploi") }}'>Emplois du temps</a><br>
+        _<a href='{{ url_for("ajouter_lieu") }}'>Lieux de rendez-vous</a><br>
+        _<a href='{{ url_for("ajouter_groupe") }}'>Groupes de personnes</a>
     {% else %}
-        <p>vous avez pas créé de compte c'est pas bj</p>
+        Il faut créer un compte pour utiliser nos services. <br><br>
+
+        Vous pourrez créer des : <br>
+        _Emplois du temps <br>
+        _Lieux de rendez-vous <br>
+        _Groupes de personnes
     {% endif %}
+    </p>
 {% endblock %}
 

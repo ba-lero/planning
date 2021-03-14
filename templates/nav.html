@@ -1,9 +1,10 @@
 {% if 'userid' in session %}
 <ul>
     <li><h2><a href='{{ url_for("profil") }}'>{{ session['usernickname'] }}</a></h2>
-        <ul class='sous'>
+        <ul class='sous' style='margin-left: 1rem;'>
             <li><a href='{{ url_for("profil") }}'>Profil</a></li>
             <li><a href='{{ url_for("groupes") }}'>Groupes</a></li>
+            <li><a href='{{ url_for("lieux") }}'>Lieux</a></li>
         </ul>
     </li>
 </ul>

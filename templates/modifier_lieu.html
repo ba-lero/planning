@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block entete %}
+    <h2>{{ session['lieucourant'][1] }}</h2>
+{% endblock %}
+
+{% block contenu %}
+<br>
+    <h2>Modifier adresse</h2>
+    <form method="post">
+        <div>
+            <label>Nouvelle adresse</label>
+            <input type="text" name="nouvad">
+        </div>
+        <div id="submit">
+            <input type="submit" value="envoyer">
+        </div>
+    </form>
+{% endblock %}

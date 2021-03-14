@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
-from db import recuperer_compte, creer_compte, creer_emploi, creer_lieu, creer_groupe, recuperer_lieux, recuperer_emplois, recuperer_groupes, inserer_horaire, inserer_personne_groupe, recuperer_membre_de_groupe, recuperer_horaire_de_groupe
+from db import recuperer_compte, creer_compte, creer_emploi, creer_lieu, creer_groupe, recuperer_lieux, recuperer_emplois, recuperer_groupes, inserer_horaire, inserer_personne_groupe, recuperer_membre_de_groupe, recuperer_horaire_de_groupe, modifier_adresse, suppr_emploi, suppr_lieu, suppr_groupe, suppr_mb_de_groupe
 import datetime
 from date import current_week, str_to_list, Horaire
 from werkzeug.security import check_password_hash
@@ -10,6 +10,7 @@ app.secret_key = "dev"
 
 emplois = []
 mes_groupes = []
+mes_lieux = []
 horaire = Horaire()
 cday = datetime.date.today()
 semaine = current_week(cday)
@@ -91,6 +92,34 @@ def groupes():
     mes_groupes = recuperer_groupes(session['userid'])
     return render_template('groupes.html', groupes = mes_groupes)
 
+@app.route('/lieux')
+def lieux():
+    global mes_lieux
+    mes_lieux = recuperer_lieux(session['userid'])
+    return render_template('lieux.html', lieux = mes_lieux)
+
+@app.route('/supprimer_emploi/<id_emploi>')
+def supprimer_emploi(id_emploi):
+    suppr_emploi(id_emploi)
+    return redirect(url_for('profil'))
+
+@app.route('/supprimer_lieu/<id_lieu>')
+def supprimer_lieu(id_lieu):
+    suppr_lieu(id_lieu)
+    return redirect(url_for('lieux'))
+
+@app.route('/supprimer_groupe/<id_groupe>')
+def supprimer_groupe(id_groupe):
+    suppr_groupe(id_groupe)
+    return redirect(url_for('groupes'))
+
+@app.route('/supprimer_mb_g/<ids>')
+def supprimer_mb_g(ids):
+    ids = str_to_list(ids)
+    id_m, id_g = ids[0], ids[1]
+    suppr_mb_de_groupe(id_m, id_g)
+    return redirect(url_for('groupes'))
+
 @app.route('/ajouter_emploi', methods=["GET", "POST"])
 def ajouter_emploi():
     if request.method == "POST":
@@ -103,7 +132,7 @@ def ajouter_emploi():
 def ajouter_lieu():
     if request.method == "POST":
         creer_lieu(session['userid'], request.form['nom'], request.form['adresse'])
-        return redirect(url_for('profil'))
+        return redirect(url_for('lieux'))
     else:
         return render_template('ajouter_lieu.html')
 
@@ -156,6 +185,14 @@ def modifier_groupe():
     else:
         return render_template('modifier_groupe.html')
 
+@app.route('/modifier_lieu', methods=["GET", "POST"])
+def modifier_lieu():
+    if request.method == "POST":
+        modifier_adresse(session['lieucourant'][0], request.form['nouvad'])
+        return redirect(url_for('lieux'))
+    else:
+        return render_template('modifier_lieu.html')
+
 @app.route('/select/<retour>')
 def select(retour):
     return redirect(url_for('modifier_emploi', action=retour))
@@ -173,6 +210,13 @@ def setgroupe(id_groupe):
         if groupe[0][1] == int(id_groupe):
             session['groupecourant'] = groupe
             return redirect(url_for('modifier_groupe'))
+
+@app.route('/setlieu/<id_lieu>')
+def setlieu(id_lieu):
+    for lieu in mes_lieux:
+        if lieu[0] == int(id_lieu):
+            session['lieucourant'] = lieu
+            return redirect(url_for('modifier_lieu'))
 
 @app.route("/supprimer/<int:id_article>")
 def supprimer(id_article):
